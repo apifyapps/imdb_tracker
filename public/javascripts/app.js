@@ -23,16 +23,16 @@ $(function(){
   function checkMovies(){
     _.each(imdbMovies, function(imdbMovie){
       $('.movie-check[value="' + imdbMovie + '"]').attr('checked', 'checked');
-      $('.movie-check[value="' + imdbMovie + '"]').closest('tr').find('td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('checked');
+      $('.movie-check[value="' + imdbMovie + '"]').closest('tr').addClass('checked');
     });
   }
 
   $('.movie-check').live('click', function(){
     if($(this).attr('checked')){
-      $(this).closest('tr').find('td:nth-child(2),td:nth-child(3),td:nth-child(4)').addClass('checked');
+      $(this).closest('tr').addClass('checked');
       addMovie($(this).val());
     } else {
-      $(this).closest('tr').find('td:nth-child(2),td:nth-child(3),td:nth-child(4)').removeClass('checked');
+      $(this).closest('tr').removeClass('checked');
       removeMovie($(this).val());
     }
   });
@@ -47,5 +47,24 @@ $(function(){
   function removeMovie(movie){
     imdbMovies = _.reject(imdbMovies, function(imdbMovie){return imdbMovie == movie});
     stash.set('imdb_movies', imdbMovies);
+  }
+
+  $('.view-all').click(function(){
+    viewMovies(this, 'tr');
+  });
+
+  $('.view-unseen').click(function(){
+    viewMovies(this, 'tr:not(.checked)');
+  });
+
+  $('.view-seen').click(function(){
+    viewMovies(this, 'tr.checked');
+  });
+
+  function viewMovies(element, movieSelector){
+    $('.nav .active').removeClass('active');
+    $(element).addClass('active');
+    $('tbody tr').hide();
+    $(movieSelector).show();
   }
 });
