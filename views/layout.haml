@@ -1,0 +1,27 @@
+%html
+  %head
+    %title= 'IMDB Movie Tracker'
+    %script{type: 'text/javascript', src: '/javascripts/jquery.min.js'}
+    %script{type: 'text/javascript', src: '/javascripts/handlebars-1.0.0.beta.6.js'}
+    %script{type: 'text/javascript', src: '/javascripts/stash.min.js'}
+    %script{type: 'text/javascript', src: '/javascripts/underscore-min.js'}
+    %script{type: 'text/javascript', src: '/javascripts/app.js'}
+    %link{rel: 'stylesheet', type: "text/css", href: '/stylesheets/styles.css'}
+    %link{rel: 'stylesheet', type: "text/css", href: '/stylesheets/bootstrap.min.css'}
+    %link{rel: 'stylesheet', type: "text/css", href: '/stylesheets/bootstrap-responsive.min.css'}
+  %body.app-content
+    .container-fluid
+      .span8
+        = yield
+    %script{id: "movies-template", type: "text/x-handlebars-template"}
+      {{#each movies}}
+      %tr
+        %td.span1
+          %input{type: 'checkbox', value: "{{this.title}}", class: 'movie-check'}
+        %td.span1
+          {{this.rank}}
+        %td.span5
+          {{this.title}}
+        %td.span1
+          {{this.rating}}
+      {{/each}}
